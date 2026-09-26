@@ -26,4 +26,6 @@ lathe_vec3 vec3_normalize(const lathe_vec3 *v);
 lathe_vec3 vec3_sub(const lathe_vec3 *a, lathe_vec3 *b);
 lathe_vec3 vec3_add(const lathe_vec3 *a, lathe_vec3 *b);
 float vec3_magnitude(const lathe_vec3 *v); // length
+float vec3_dot_product(const lathe_vec3 *a, const lathe_vec3 *b);
+lathe_vec3 vec3_cross_product(const lathe_vec3 *a, const lathe_vec3 *b);
 void vec3_print(const lathe_vec3 *v, FILE *out);

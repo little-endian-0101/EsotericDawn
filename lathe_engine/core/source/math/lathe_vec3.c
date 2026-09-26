@@ -33,6 +33,14 @@ float vec3_magnitude(const lathe_vec3 *v) {
   return sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
 }
 
+float vec3_dot_product(const lathe_vec3 *a, const lathe_vec3 *b) {
+  return (a->x * b->x + a->y * b->y + a->z * b->z);
+}
+
+lathe_vec3 vec3_cross_product(const lathe_vec3 *a, const lathe_vec3 *b) {
+  lathe_vec3 v = {};
+  return v;
+}
 void vec3_print(const lathe_vec3 *v, FILE *out) {
   out = (out == nullptr) ? stderr : out;
   fprintf(out, "vec3: [%.3f %.3f %.3f]\n", v->x, v->y, v->z);
