@@ -14,18 +14,19 @@
 #include <stdlib.h>
 
 int main(int argc, const char *argv[]) {
-  //   lathe_vec3 v = {5, 25, 5};
+  lathe_vec3 v = {5, 25, 5};
   //
-  //   FILE *fptr;
-  //   fptr = fopen("LogFile", "a");
-  //
-  //   vec3_print(&v, fptr);
-  //   v = vec3_negate(&v);
-  //   vec3_print(&v, NULL);
-  //
-  //   lathe_vec3 n = vec3_normalize(&v);
-  //
-  //   lathe_vec3 d = vec3_add(&v, &v);
+  FILE *fptr;
+  fptr = fopen("LogFile", "a");
+
+  vec3_print(&v, stderr);
+  v = vec3_negate(&v);
+  vec3_print(&v, NULL);
+
+  lathe_vec3 n = vec3_normalize(&v);
+  vec3_print(&n, nullptr);
+  lathe_vec3 d = vec3_add(&v, &v);
+  vec3_print(&d, fptr);
   //   lathe_mat_3x3 m = create_3x3_matrix_vec3(&d, &d, &d);
   //   lathe_mat_3x3 m2 = create_3x3_matrix_vec3(&d, &d, &d);
   //   printf("%f\n", m.m[0][0]);
@@ -34,7 +35,7 @@ int main(int argc, const char *argv[]) {
   //
   //   lathe_mat_3x3 i = mat_3x3_mul_mat_3x3(&m, &m2);
   //   mat_3x3_print(&i, NULL);
-  //   vec3_print(&n, NULL);
+
   //   i.m[2][0] = 1.6f;
   //
   //   lathe_vec3 tw = get_mat_3x3_row(&i, 2);
@@ -82,5 +83,5 @@ int main(int argc, const char *argv[]) {
   LATHE_TRACE("This is a trace msg", NULL);
   LATHE_DEBUG("debugger msg", nullptr);
   // free(backing_buf);
-  // fclose(fptr);
+  fclose(fptr);
 }
