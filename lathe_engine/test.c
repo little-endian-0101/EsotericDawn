@@ -9,10 +9,10 @@
 #include "math/lathe_mat3.h"
 #include "math/lathe_vec3.h"
 #include "memory/lathe_memory.h"
+#include "system/lathe_controller.h"
 #include "system/lathe_logger.h"
 #include <assert.h>
 #include <stdlib.h>
-
 int main(int argc, const char *argv[]) {
   lathe_vec3 v = {5, 25, 5};
   //
@@ -84,7 +84,23 @@ int main(int argc, const char *argv[]) {
 
   lathe_vec3 v1 = {2, 7, 1};
   lathe_vec3 v2 = {8, 2, 8};
+  assert(vec3_dot_product(&v1, &v2) == 38.0f);
   fprintf(stderr, "dot is: %f\n", vec3_dot_product(&v1, &v2));
   // free(backing_buf);
   fclose(fptr);
+
+  for (;;) {
+    if (controller_connected()) {
+      printf("Controller found!\n");
+      break;
+    }
+
+    // usleep(100000);
+  }
+  while (1) {
+    controller_print_buttons();
+
+    // usleep(16000); // ~60 checks/sec
+  }
+  // controller_test();
 }
