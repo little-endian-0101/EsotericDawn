@@ -8,7 +8,8 @@ SRC :=	test.c \
 		core/source/math/lathe_mat3.c \
 		core/source/math/lathe_vec3.c \
 		core/source/memory/lathe_memory.c \
-		core/source/system/lathe_logger.c
+		core/source/system/lathe_logger.c \
+		core/source/system/lathe_controller.m
 
 #https://stackoverflow.com/a/12099167
 # UNAME_S :=
@@ -29,14 +30,20 @@ SRC :=	test.c \
 
 TARGET := build/test
 OBJ :=	$(SRC:.c=.o)
+OBJ := $(OBJ:.m=.o)
+# Specify the frameworks to link
+LIBS = -framework GameController -framework Foundation -lobjc
 
 
 all : $(TARGET)
 
 $(TARGET):	$(OBJ)
-	$(CC) $(OBJ) -o $(TARGET)
+	$(CC) $(OBJ) -o $(TARGET) $(LIBS)
 
 %.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.m
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
