@@ -52,12 +52,9 @@ void *arena_allocate(lathe_arena *arena, size_t size) {
 void arena_free_all(lathe_arena *arena) {
   arena->curr_offset = 0;
   arena->prev_offset = 0;
-// may want to memset regardless so not playing with data that isnt tracked
-// since that may become overwritten..
 #if defined(LATHE_ARENA_POISON)
   // https://www.aussieai.com/blog/poisoning-memory-safety
   memset(arena->buf, '@', arena->buf_len);
-  LATHE_DEBUG("Arena buffer was posioned...bleh\n", stderr); // Will add logger
-                                                             // later
-#endif // defined(LATHE_ARENA_POISON) || defined(DEBUG)
+  LATHE_DEBUG("Arena buffer was posioned...bleh\n", stderr);
+#endif // defined(LATHE_ARENA_POISON)
 }
