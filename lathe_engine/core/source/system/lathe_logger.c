@@ -87,8 +87,35 @@ void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf) {
 void _internal_log_mes(lathe_log_level lvl, FILE *out, const char *file,
                        int line, const char *time, const char *msg) {
   out = (out == nullptr) ? stderr : out;
+
   char log_str[log_buffer_max];
   log_lvl_to_str(lvl, log_str);
   // add macro for time
-  fprintf(out, "%s %s:%d %s ", log_str, file, line, msg);
+  switch (lvl) {
+  case LOG_LEVEL_FATAL:
+    term_set_bold(out);
+    term_set_underline(out);
+    term_set_foreground_color(LASER_RED, out);
+    break;
+  case LOG_LEVEL_ERROR:
+    term_set_foreground_color(LASER_RED, out);
+    break;
+  case LOG_LEVEL_WARNING:
+    term_set_foreground_color(FIRE_BUSH, out);
+    break;
+  case LOG_LEVEL_INFO:
+    term_set_foreground_color(LIGHT_SEA_BLUE, out);
+    break;
+  case LOG_LEVEL_DEBUG:
+    term_set_foreground_color(SOME_GREEN, out);
+    break;
+  case LOG_LEVEL_TRACE:
+    term_set_foreground_color(YELLOW_GLITTER, out);
+    break;
+  default:
+    // may handle later
+    break;
+  }
+  fprintf(out, "%s %s:%d %s \n", log_str, file, line, msg);
+  term_reset(out);
 }
