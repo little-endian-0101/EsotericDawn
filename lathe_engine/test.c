@@ -80,6 +80,7 @@ int main(int argc, const char *argv[]) {
   LATHE_ERROR("This is an ERROR", stdout);
   LATHE_INFO("This is just for information", NULL);
   LATHE_TRACE("This is a trace msg", NULL);
+  LATHE_DEBUG("debugger msg", nullptr);
   // free(backing_buf);
   // fclose(fptr);
 }
