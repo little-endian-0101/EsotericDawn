@@ -52,22 +52,22 @@ void term_reset(FILE *out) {
 void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf) {
   switch (lvl) {
   case LOG_LEVEL_FATAL:
-    snprintf(log_lvl_buf, log_buffer_max, "%s", "\U00002757 FATAL");
+    snprintf(log_lvl_buf, log_buffer_max, "%s", "[FATAL] \U00002757");
     break;
   case LOG_LEVEL_ERROR:
-    snprintf(log_lvl_buf, log_buffer_max, "%s", "\U0000274C ERROR");
+    snprintf(log_lvl_buf, log_buffer_max, "%s", "[ERROR] \U0000274C");
     break;
   case LOG_LEVEL_WARNING:
-    snprintf(log_lvl_buf, log_buffer_max, "%s", "\U000026A0 WARNING");
+    snprintf(log_lvl_buf, log_buffer_max, "%s", "[WARNING] \U000026A0");
     break;
   case LOG_LEVEL_INFO:
-    snprintf(log_lvl_buf, log_buffer_max, "%s", "\U0000270F INFO");
+    snprintf(log_lvl_buf, log_buffer_max, "%s", "[INFO] \U00002139");
     break;
   case LOG_LEVEL_DEBUG:
-    snprintf(log_lvl_buf, log_buffer_max, "%s", "\U0001F41B DEBUG");
+    snprintf(log_lvl_buf, log_buffer_max, "%s", "[DEBUG] \U0001F41B");
     break;
   case LOG_LEVEL_TRACE:
-    snprintf(log_lvl_buf, log_buffer_max, "%s", "\U00002753 TRACE");
+    snprintf(log_lvl_buf, log_buffer_max, "%s", "[TRACE] \U0001F50D");
     break;
   default:
     // may handle later
