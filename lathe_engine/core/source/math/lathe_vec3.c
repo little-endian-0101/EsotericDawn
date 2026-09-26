@@ -34,5 +34,6 @@ float vec3_magnitude(const lathe_vec3 *v) {
 }
 
 void vec3_print(const lathe_vec3 *v, FILE *out) {
-  fprintf(out, "%.3f %.3f %.3f", v->x, v->y, v->z);
+  out = (out == nullptr) ? stderr : out;
+  fprintf(out, "vec3: [%.3f %.3f %.3f]\n", v->x, v->y, v->z);
 }
