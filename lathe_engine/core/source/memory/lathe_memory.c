@@ -29,17 +29,25 @@ uintptr_t align_foward(uintptr_t ptr, size_t align) {
 }
 
 void *arena_alloced_align(lathe_arena *arena, size_t size, size_t align) {
+  size_t result = {};
   uintptr_t curr = (uintptr_t)arena->buf + (uintptr_t)arena->curr_offset;
   uintptr_t offset = align_foward(curr, align);
   offset -= (uintptr_t)arena->buf; // cast the buf to ptr
+  if (size > SIZE_MAX - offset) {
+    // overflow
+    LATHE_WARN("The asked space would lead to an overflow\n", stderr);
+    return nullptr;
+  } else {
+    result = offset + size;
+  }
   // No Space
-  if (offset + size > arena->buf_len) {
+  if (result > arena->buf_len) {
     LATHE_WARN("The arena has no space for this, returning nullptr\n", stderr);
     return nullptr;
   }
   void *ptr = &arena->buf[offset];
   arena->prev_offset = offset;
-  arena->curr_offset = offset + size;
+  arena->curr_offset = result;
 
   memset(ptr, 0, size);
   return ptr;

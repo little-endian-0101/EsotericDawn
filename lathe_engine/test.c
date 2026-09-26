@@ -69,8 +69,7 @@ int main(int argc, const char *argv[]) {
     printf("%p %d\n", z, *z);
   }
 
-  void *should_fail = arena_allocate(&arena, SIZE_MAX / 2); // overflow
-                                                            // possible!
+  void *should_fail = arena_allocate(&arena, SIZE_MAX);
 
   arena_free_all(&arena);
 
