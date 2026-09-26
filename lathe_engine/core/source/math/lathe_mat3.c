@@ -99,6 +99,7 @@ lathe_vec3 mat_3x3_mul_vec3(const lathe_mat_3x3 *M, const lathe_vec3 *v) {
 
       .z = M->m[2][0] * v->x + M->m[2][1] * v->y + M->m[2][2] * v->z};
 }
+
 void mat_3x3_print(const lathe_mat_3x3 *mat, FILE *out) {
   out = (out == nullptr) ? stderr : out;
   fprintf(out, "mat3x3:\n");
