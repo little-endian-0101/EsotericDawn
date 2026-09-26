@@ -82,6 +82,10 @@ int main(int argc, const char *argv[]) {
   LATHE_INFO("This is just for information", NULL);
   LATHE_TRACE("This is a trace msg", NULL);
   LATHE_DEBUG("debugger msg", nullptr);
+
+  lathe_vec3 v1 = {2, 7, 1};
+  lathe_vec3 v2 = {8, 2, 8};
+  fprintf(stderr, "dot is: %f\n", vec3_dot_product(&v1, &v2));
   // free(backing_buf);
   fclose(fptr);
 }
