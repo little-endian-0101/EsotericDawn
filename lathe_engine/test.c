@@ -54,27 +54,27 @@ int main(int argc, const char *argv[]) {
   //   assert(result.z == 50.0f);
   //   vec3_print(&result, NULL);
   //
-  //   // Memory Test - Can use malloc or stack
-  //   // void *backing_buf = malloc(LATHE_1KB);
-  //
-  //   unsigned char backing_buf[LATHE_1KB];
-  //   lathe_arena arena = {};
-  //   arena_init(&arena, backing_buf, LATHE_1KB);
-  //   int *z = (int *)arena_allocate(&arena, sizeof(int));
-  //   if (z == nullptr) {
-  //     printf("Theres nothing we can do\n");
-  //   } else {
-  //     *z = 1;
-  //
-  //     printf("%p %d\n", z, *z);
-  //   }
-  //
-  //   void *should_fail = arena_allocate(&arena, SIZE_MAX / 2); // may
-  //   overflow...
-  //
-  //   arena_free_all(&arena);
-  //
-  //   printf("%p %c\n", z, *z);
+  // Memory Test - Can use malloc or stack
+  // void *backing_buf = malloc(LATHE_1KB);
+
+  unsigned char backing_buf[LATHE_1KB];
+  lathe_arena arena = {};
+  arena_init(&arena, backing_buf, LATHE_1KB);
+  int *z = (int *)arena_allocate(&arena, sizeof(int));
+  if (z == nullptr) {
+    printf("Theres nothing we can do\n");
+  } else {
+    *z = 1;
+
+    printf("%p %d\n", z, *z);
+  }
+
+  void *should_fail = arena_allocate(&arena, SIZE_MAX / 2); // overflow
+                                                            // possible!
+
+  arena_free_all(&arena);
+
+  printf("%p %c\n", z, *z);
 
   LATHE_FATAL("This is FATAL!", nullptr);
   LATHE_WARN("This is a warning!", nullptr);
