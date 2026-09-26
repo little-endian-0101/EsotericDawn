@@ -1,0 +1,6 @@
+CompileFlags:
+  Add:
+    - -std=c23
+    - -I./core/include
+    - -xc
+    - -DLATHE_ARENA_POISON
