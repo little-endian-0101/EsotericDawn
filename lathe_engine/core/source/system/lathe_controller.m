@@ -3,7 +3,6 @@
 #import <GameController/GameController.h>
 
 bool controller_connected(void) {
-  // remove this later.
   [[NSRunLoop currentRunLoop]
       runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
   return GCController.controllers.count > 0;
@@ -44,6 +43,7 @@ lathe_controller_state controller_get_state(void) {
   return state;
 }
 
+#ifdef LATHE_DEBUG_ENABLED
 void controller_print_buttons(void) {
   [[NSRunLoop currentRunLoop]
       runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
@@ -86,3 +86,6 @@ void controller_print_buttons(void) {
   if (pad.dpad.right.isPressed)
     printf("D-Pad Right\n");
 }
+#else
+void controller_print_buttons(void) {}
+#endif

@@ -4,3 +4,4 @@ CompileFlags:
     - -Icore/include
     - -xc
     - -DLATHE_ARENA_POISON
+    - -DLATHE_DEBUG_ENABLED

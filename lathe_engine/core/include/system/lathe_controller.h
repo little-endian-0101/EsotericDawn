@@ -23,5 +23,6 @@ typedef struct {
 } lathe_controller_state;
 
 bool controller_connected(void);
-void controller_print_buttons(void);
+bool controller_disconnected(void);
+void controller_print_buttons(void); // Debug
 lathe_controller_state controller_get_state(void);
