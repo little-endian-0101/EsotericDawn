@@ -7,7 +7,8 @@ CFLAGS := -Icore/include \
 		  -Wextra \
 		  -Wpedantic \
 		  -Wconversion \
-		  -Werror
+		  -Werror \
+		  -DLATHE_HEAP_BACKING_MEMORY_TEST
 
 SRC :=	test.c \
 		core/source/math/lathe_mat3.c \
