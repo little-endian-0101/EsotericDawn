@@ -2,52 +2,38 @@
 
 void term_set_background_color(color_t color, FILE *out) {
   out = (out == nullptr) ? stderr : out;
-  fprintf(out, "\e[48;2;%d;%d;%dm", color.R, color.G, color.B);
+  fprintf(out, "\033[48;2;%d;%d;%dm", color.R, color.G, color.B);
 }
 
 void term_set_foreground_color(color_t color, FILE *out) {
   out = (out == nullptr) ? stderr : out;
-  fprintf(out, "\e[38;2;%d;%d;%dm", color.R, color.G, color.B);
+  fprintf(out, "\033[38;2;%d;%d;%dm", color.R, color.G, color.B);
 }
-/**
- * @brief Sets the terminal text to be bold
- */
+
 void term_set_bold(FILE *out) {
   out = (out == nullptr) ? stderr : out;
-  fprintf(out, "\e[1m");
+  fprintf(out, "\033[1m");
 }
 
-/**
- * @brief Sets the terminal text to not be bold
- */
 void term_set_no_bold(FILE *out) {
   out = (out == nullptr) ? stderr : out;
-  fprintf(out, "\e[22m");
+  fprintf(out, "\033[22m");
 }
-/**
- * @brief Sets the terminal text to be underlined
- */
+
 void term_set_underline(FILE *out) {
   out = (out == nullptr) ? stderr : out;
-  fprintf(out, "\e[4m");
+  fprintf(out, "\033[4m");
 }
 
-/**
- * @brief Sets the terminal text to be not underlined
- */
 void term_set_no_underline(FILE *out) {
   out = (out == nullptr) ? stderr : out;
-  fprintf(out, "\e[24m");
+  fprintf(out, "\033[24m");
 }
 
-/**
- * @brief Resets any of the terminals features above
- */
 void term_reset(FILE *out) {
   out = (out == nullptr) ? stderr : out;
-  fprintf(out, "\e[0m");
+  fprintf(out, "\033[0m");
 }
-/** @} */ // End of Terminal Coloring Utils
 
 void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf) {
   switch (lvl) {
@@ -69,28 +55,16 @@ void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf) {
   case LOG_LEVEL_TRACE:
     snprintf(log_lvl_buf, log_buffer_max, "%s", "[TRACE] \U0001F50D");
     break;
-  default:
-    // may handle later
-    break;
   }
 }
 
-/**
- * @brief Sets the log message to the provided output not to be used directly
- * @param lvl Provided color for this terminal function
- * @param out The output file/buffer
- * @param msg Message to be logged
- */
-// LATHE_ERROR("This is an ERROR", stdout);
-//  #define LATHE_FATAL(msg, out) \
-//   _internal_log_mes(LOG_LEVEL_FATAL, out, __FILE__, __LINE__, __TIME__, msg);
-void _internal_log_mes(lathe_log_level lvl, FILE *out, const char *file,
-                       int line, const char *time, const char *msg) {
+void internal_log_mes(lathe_log_level lvl, FILE *out, const char *file,
+                       int line, [[maybe_unused]] const char *time, const char *msg) {
   out = (out == nullptr) ? stderr : out;
 
   char log_str[log_buffer_max];
   log_lvl_to_str(lvl, log_str);
-  // add macro for time
+  
   switch (lvl) {
   case LOG_LEVEL_FATAL:
     term_set_bold(out);
@@ -111,9 +85,6 @@ void _internal_log_mes(lathe_log_level lvl, FILE *out, const char *file,
     break;
   case LOG_LEVEL_TRACE:
     term_set_foreground_color(YELLOW_GLITTER, out);
-    break;
-  default:
-    // may handle later
     break;
   }
   fprintf(out, "%s %s:%d %s \n", log_str, file, line, msg);

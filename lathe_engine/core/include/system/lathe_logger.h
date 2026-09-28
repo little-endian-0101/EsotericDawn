@@ -97,23 +97,23 @@ void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf);
  * @param out The output file/buffer
  * @param msg Message to be logged
  */
-void _internal_log_mes(lathe_log_level lvl, FILE *out, const char *file,
+void internal_log_mes(lathe_log_level lvl, FILE *out, const char *file,
                        int line, const char *time, const char *msg);
 
 #define LATHE_FATAL(msg, out)                                                  \
-  _internal_log_mes(LOG_LEVEL_FATAL, out, __FILE__, __LINE__, __TIME__, msg);
+  internal_log_mes(LOG_LEVEL_FATAL, out, __FILE__, __LINE__, __TIME__, msg);
 
 #define LATHE_WARN(msg, out)                                                   \
-  _internal_log_mes(LOG_LEVEL_WARNING, out, __FILE__, __LINE__, __TIME__, msg);
+  internal_log_mes(LOG_LEVEL_WARNING, out, __FILE__, __LINE__, __TIME__, msg);
 
 #define LATHE_INFO(msg, out)                                                   \
-  _internal_log_mes(LOG_LEVEL_INFO, out, __FILE__, __LINE__, __TIME__, msg);
+  internal_log_mes(LOG_LEVEL_INFO, out, __FILE__, __LINE__, __TIME__, msg);
 
 #define LATHE_DEBUG(msg, out)                                                  \
-  _internal_log_mes(LOG_LEVEL_DEBUG, out, __FILE__, __LINE__, __TIME__, msg);
+  internal_log_mes(LOG_LEVEL_DEBUG, out, __FILE__, __LINE__, __TIME__, msg);
 
 #define LATHE_ERROR(msg, out)                                                  \
-  _internal_log_mes(LOG_LEVEL_ERROR, out, __FILE__, __LINE__, __TIME__, msg);
+  internal_log_mes(LOG_LEVEL_ERROR, out, __FILE__, __LINE__, __TIME__, msg);
 
 #define LATHE_TRACE(msg, out)                                                  \
-  _internal_log_mes(LOG_LEVEL_TRACE, out, __FILE__, __LINE__, __TIME__, msg);
+  internal_log_mes(LOG_LEVEL_TRACE, out, __FILE__, __LINE__, __TIME__, msg);
