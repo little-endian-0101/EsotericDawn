@@ -53,9 +53,8 @@ lathe_mat_3x3 create_3x3_matrix_float(float n00, float n01, float n02,
   return mat;
 }
 
-// using row-major order,dont care im in C so acting like it
 lathe_vec3 get_mat_3x3_row(const lathe_mat_3x3 *mat, int row) {
-  return (lathe_vec3){mat->m[row][0], mat->m[row][1], mat->m[row][2]};
+  return (lathe_vec3){{mat->m[row][0], mat->m[row][1], mat->m[row][2]}};
 }
 
 lathe_mat_3x3 mat_3x3_mul_mat_3x3(const lathe_mat_3x3 *A,

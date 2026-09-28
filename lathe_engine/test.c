@@ -13,8 +13,11 @@
 #include "system/lathe_logger.h"
 #include <assert.h>
 #include <stdlib.h>
-int main(int argc, const char *argv[]) {
-  lathe_vec3 v = {5, 25, 5};
+//#include <time.h>
+#include <unistd.h> 
+
+int main(void) {
+  lathe_vec3 v = {{5, 25, 5}};
   //
   FILE *fptr;
   fptr = fopen("LogFile", "a");
@@ -46,7 +49,7 @@ int main(int argc, const char *argv[]) {
   lathe_mat_3x3 ma = {
       .m = {{1.0f, 2.0f, 3.0f}, {4.0f, 5.0f, 6.0f}, {7.0f, 8.0f, 9.0f}}};
 
-  lathe_vec3 ve = {1.0f, 2.0f, 3.0f};
+  lathe_vec3 ve = {{1.0f, 2.0f, 3.0f}};
 
   lathe_vec3 result = mat_3x3_mul_vec3(&ma, &ve);
   assert(result.x == 14.0f);
@@ -66,14 +69,14 @@ int main(int argc, const char *argv[]) {
   } else {
     *z = 1;
 
-    printf("%p %d\n", z, *z);
+    printf("%p %d\n", (void *)z, *z);
   }
 
-  void *should_fail = arena_allocate(&arena, SIZE_MAX);
+  [[maybe_unused]] void *should_fail = arena_allocate(&arena, SIZE_MAX);
 
   arena_free_all(&arena);
 
-  printf("%p %c\n", z, *z);
+  printf("%p %c\n", (void *)z, *z);
 
   LATHE_FATAL("This is FATAL!", nullptr);
   LATHE_WARN("This is a warning!", nullptr);
@@ -82,25 +85,28 @@ int main(int argc, const char *argv[]) {
   LATHE_TRACE("This is a trace msg", NULL);
   LATHE_DEBUG("debugger msg", nullptr);
 
-  lathe_vec3 v1 = {2, 7, 1};
-  lathe_vec3 v2 = {8, 2, 8};
+  lathe_vec3 v1 = {{2, 7, 1}};
+  lathe_vec3 v2 = {{8, 2, 8}};
   assert(vec3_dot_product(&v1, &v2) == 38.0f);
   fprintf(stderr, "dot is: %f\n", vec3_dot_product(&v1, &v2));
   // free(backing_buf);
   fclose(fptr);
 
+  // Controller Test
   for (;;) {
+      printf("\rSearching for controller   \rSearching for controller");
+         for (int dots = 0; dots <= 3; dots++) {
+            fflush(stdout);
+            usleep(300000);
+            printf(".");
+        }
     if (controller_connected()) {
-      printf("Controller found!\n");
+      printf("\nController found!\n");
+      LATHE_INFO("Engine Test Complete",nullptr);
       break;
     }
-
-    // usleep(100000);
-  }
-  while (1) {
-    controller_print_buttons();
-
-    // usleep(16000); // ~60 checks/sec
-  }
-  // controller_test();
+      }
+  // while (1) {
+  //   controller_print_buttons();
+  // }
 }
