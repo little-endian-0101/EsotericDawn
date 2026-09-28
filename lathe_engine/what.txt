@@ -1,0 +1,7 @@
+clang -Icore/include -std=c23 -DLATHE_ARENA_POISON -Weverything -Wno-pre-c23-compat -c test.c -o test.o
+clang -Icore/include -std=c23 -DLATHE_ARENA_POISON -Weverything -Wno-pre-c23-compat -c core/source/math/lathe_mat3.c -o core/source/math/lathe_mat3.o
+clang -Icore/include -std=c23 -DLATHE_ARENA_POISON -Weverything -Wno-pre-c23-compat -c core/source/math/lathe_vec3.c -o core/source/math/lathe_vec3.o
+clang -Icore/include -std=c23 -DLATHE_ARENA_POISON -Weverything -Wno-pre-c23-compat -c core/source/memory/lathe_memory.c -o core/source/memory/lathe_memory.o
+clang -Icore/include -std=c23 -DLATHE_ARENA_POISON -Weverything -Wno-pre-c23-compat -c core/source/system/lathe_logger.c -o core/source/system/lathe_logger.o
+clang -Icore/include -std=c23 -DLATHE_ARENA_POISON -Weverything -Wno-pre-c23-compat -c core/source/system/lathe_controller.m -o core/source/system/lathe_controller.o
+clang test.o core/source/math/lathe_mat3.o core/source/math/lathe_vec3.o core/source/memory/lathe_memory.o core/source/system/lathe_logger.o core/source/system/lathe_controller.o -o build/test -framework GameController -framework Foundation -lobjc
