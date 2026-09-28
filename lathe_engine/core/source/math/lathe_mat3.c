@@ -8,10 +8,8 @@
 //  https://foundationsofgameenginedev.com
 //
 
-// typedef struct {
-//   float m[3][3];
-// } lathe_mat_3x3;
 #include "math/lathe_mat3.h"
+
 const lathe_mat_3x3 zero_3x3 = {};
 const lathe_mat_3x3 identity_3x3 = {
     {{1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}};
@@ -90,6 +88,7 @@ lathe_mat_3x3 mat_3x3_mul_mat_3x3(const lathe_mat_3x3 *A,
 
   return mat;
 }
+
 lathe_vec3 mat_3x3_mul_vec3(const lathe_mat_3x3 *M, const lathe_vec3 *v) {
   return (lathe_vec3){
       .x = M->m[0][0] * v->x + M->m[0][1] * v->y + M->m[0][2] * v->z,
