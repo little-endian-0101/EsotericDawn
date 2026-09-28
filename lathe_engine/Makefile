@@ -3,6 +3,11 @@ CC := clang
 CFLAGS := -Icore/include \
 		  -std=c23 \
 		  -DLATHE_ARENA_POISON \
+		  -Wall \
+		  -Wextra \
+		  -Wpedantic \
+		  -Wconversion \
+		  -Werror
 
 SRC :=	test.c \
 		core/source/math/lathe_mat3.c \
