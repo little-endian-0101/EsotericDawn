@@ -11,11 +11,11 @@
 #pragma once
 #include <stdio.h>
 typedef union {
-  double idx[3];
+  float idx[3];
   struct {
-    double x;
-    double y;
-    double z;
+    float x;
+    float y;
+    float z;
   };
 } lathe_vec3;
 
