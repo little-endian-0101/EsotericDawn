@@ -16,6 +16,8 @@
 #include <time.h>
 #include <unistd.h> 
 #include "platform/platform.h"
+
+
 uint64_t time_freq;
 int main(void) {
     LATHE_INFO("Starting Vec3 Test...",nullptr);
