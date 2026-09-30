@@ -70,13 +70,63 @@ lathe_vec3 vec3_negate(const lathe_vec3 *v);
  */
 lathe_vec3 vec3_normalize(const lathe_vec3 *v);
 
-
+/**
+ * @ingroup vec3_operators
+ * @brief Subtracts two vectors
+ * @param a Pointer to a vec3
+ * @param b Pointer to another vec3 (or the same) dont care about using restrict 
+ * @return The resulting vec3.
+ */
 lathe_vec3 vec3_sub(const lathe_vec3 *a, lathe_vec3 *b);
+
+/**
+ * @ingroup vec3_operators
+ * @brief Adds two vectors
+ * @param a Pointer to a vec3
+ * @param b Pointer to another vec3 (or the same) dont care about using restrict 
+ * @return The resulting vec3.
+ */
 lathe_vec3 vec3_add(const lathe_vec3 *a, lathe_vec3 *b);
 
-
+/**
+ * @ingroup vec3_operators
+ * @brief Calculates the magnitude (length) of the provided vector
+ * @param v Pointer to a vec3
+ * @return The resulting magnitude of vector @p v.
+ */
 float vec3_magnitude(const lathe_vec3 *v);
+
+/**
+ * @ingroup vec3_operators
+ * @brief Calculates the dot product of two vectors
+ * @param a Pointer to a vec3
+ * @param b Pointer to another vec3 (or the same) dont care about using restrict 
+ * @return The resulting dot product of the two vectors @p a and @p b.
+ */
 float vec3_dot_product(const lathe_vec3 *a, const lathe_vec3 *b);
+
+/**
+ * @ingroup vec3_operators
+ * @brief Calculates the cross product of two vectors
+ * @param a Pointer to a vec3
+ * @param b Pointer to another vec3 (or the same) dont care about using restrict 
+ * @return The resulting vec3.
+ */
 lathe_vec3 vec3_cross_product(const lathe_vec3 *a, const lathe_vec3 *b);
+
+/**
+ * @ingroup vec3_operators
+ * @brief Compares two vec3's equality
+ * @param a Pointer to a vec3
+ * @param b Pointer to another vec3 (or the same) dont care about using restrict 
+ * @return true if @p a and @p b have the same components (x,y,z) and false otherwise
+ */
 bool vec3_eq(const lathe_vec3 *a, const lathe_vec3 *b);
+
+/**
+ * @ingroup vec3_operators
+ * @brief Prints the vec3 to the provided output file
+ * @param v Pointer to a vec3
+ * @param out Output file to write to
+ */
 void vec3_print(const lathe_vec3 *v, FILE *out);
