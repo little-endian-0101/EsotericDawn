@@ -9,6 +9,7 @@
 //
 
 #pragma once
+
 #include <stdio.h>
 
 /**
@@ -51,8 +52,25 @@ lathe_vec3 vec3_scalar_mult(const lathe_vec3 *v, float scalar);
  * and return the zero vector in release mode.    
  */
 lathe_vec3 vec3_scalar_div(const lathe_vec3 *v, float scalar);
+
+/**
+ * @ingroup vec3_operators
+ * @brief Negates the vec3
+ * @param v Pointer to the vec3 to negate
+ * @return The resulting vec3.  
+ */
 lathe_vec3 vec3_negate(const lathe_vec3 *v);
+
+/**
+ * @ingroup vec3_operators
+ * @brief Normalizes the vector, so magnitude becomes 1, while pointing in same direction
+ * @param v Pointer to the vec3 to divide
+ * @return The resulting vec3. If @p v has a magnitude of 0 will assert in debug mode
+ * and return the zero vector in release mode
+ */
 lathe_vec3 vec3_normalize(const lathe_vec3 *v);
+
+
 lathe_vec3 vec3_sub(const lathe_vec3 *a, lathe_vec3 *b);
 lathe_vec3 vec3_add(const lathe_vec3 *a, lathe_vec3 *b);
 
