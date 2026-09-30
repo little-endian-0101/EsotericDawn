@@ -38,7 +38,7 @@ TARGET := build/test
 OBJ :=	$(SRC:.c=.o)
 OBJ := $(OBJ:.m=.o)
 # Specify the frameworks to link
-LIBS = -framework GameController -framework Foundation -lobjc
+LIBS = -framework GameController -framework Foundation -framework Cocoa -lobjc
 
 
 all : $(TARGET)

@@ -1,5 +1,11 @@
 #pragma once
-#include "lathe_logger.h"
+#include <stdint.h>
+#include "system/lathe_logger.h"
+
+static const char* default_application_name = "LATHE";
+static constexpr int32_t default_win_width = 1280;
+static constexpr int32_t default_win_height = 720;
+
 
 typedef struct PlatformState {
   void *internal_state; // Opoque ptr to memory
@@ -39,3 +45,10 @@ void platform_console_write(const char *msg, lathe_log_level lvl);
 double platform_get_time();
 void platform_sleep(uint64_t ms);
 // ### Threading ###
+
+// ### Timing ###
+uint64_t platform_get_timer_value(void);
+uint64_t platform_get_timer_freq(void);
+double lathe_get_time(void);//move?
+void timer_init(void);
+// ### Timing ###
