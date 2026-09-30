@@ -4,7 +4,7 @@
 #include <string.h>
 
 // https://graphics.stanford.edu/~seander/bithacks.html#DetermineIfPowerOf2
-static inline bool is_power_of_two(uintptr_t ptr_size) {
+[[maybe_unused]] static inline bool is_power_of_two(uintptr_t ptr_size) {
     return (ptr_size & (ptr_size - 1)) == 0;
 }
 
@@ -34,7 +34,7 @@ void *arena_alloced_align(lathe_arena *arena, size_t size, size_t align) {
     uintptr_t offset = align_foward(curr, align);
     offset -= (uintptr_t)arena->buf; // cast the buf to ptr
     if (size > SIZE_MAX - offset) {
-        LATHE_WARN("The asked space would lead to an overflow\n", stderr);
+        LATHE_ERROR("The asked space would lead to an overflow\n", stderr);
         return nullptr;
     } else {
         result = offset + size;
