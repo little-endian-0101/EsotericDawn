@@ -53,8 +53,9 @@ typedef struct {
  */
 
 /**
- * @brief Sets the terminal background to the provided color
- * @param color Provided color for this terminal function
+ * @brief Sets the outputs background to color provided
+ * @param color color to be applied
+ * @param out output file or buffer
  */
 void term_set_background_color(color_t color, FILE *out);
 
@@ -89,6 +90,8 @@ void term_set_no_underline(FILE *out);
  */
 void term_reset(FILE *out);
 /** @} */ // End of Terminal Coloring Utils
+
+
 
 void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf);
 
