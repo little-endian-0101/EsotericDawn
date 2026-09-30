@@ -17,7 +17,7 @@
 #endif
 
 #include <stdint.h>
-#include <stdio.h> //size_t...
+#include <stdio.h>
 
 constexpr size_t log_buffer_max = 16;
 
@@ -27,7 +27,8 @@ typedef enum : uint8_t {
   LOG_LEVEL_WARNING,
   LOG_LEVEL_INFO,
   LOG_LEVEL_DEBUG,
-  LOG_LEVEL_TRACE
+  LOG_LEVEL_TRACE,
+  LOG_LEVEL_COUNT
 } lathe_log_level;
 
 typedef struct {

@@ -55,6 +55,8 @@ void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf) {
   case LOG_LEVEL_TRACE:
     snprintf(log_lvl_buf, log_buffer_max, "%s", "[TRACE] \U0001F50D");
     break;
+  case LOG_LEVEL_COUNT:
+    break;
   }
 }
 
@@ -85,6 +87,8 @@ void internal_log_mes(lathe_log_level lvl, FILE *out, const char *file,
     break;
   case LOG_LEVEL_TRACE:
     term_set_foreground_color(YELLOW_GLITTER, out);
+    break;
+      case LOG_LEVEL_COUNT:
     break;
   }
   fprintf(out, "%s %s:%d %s \n", log_str, file, line, msg);
