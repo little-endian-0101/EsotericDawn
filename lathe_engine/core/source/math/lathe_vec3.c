@@ -1,4 +1,6 @@
 #include "math/lathe_vec3.h"
+#include "system/lathe_logger.h"
+#include <assert.h>
 #include <math.h>
 
 lathe_vec3 vec3_scalar_mult(const lathe_vec3 *v, float scalar) {
@@ -6,6 +8,11 @@ lathe_vec3 vec3_scalar_mult(const lathe_vec3 *v, float scalar) {
 }
 
 lathe_vec3 vec3_scalar_div(const lathe_vec3 *v, float scalar) {
+  assert(scalar != 0.0f);
+  if (scalar == 0.0f) {
+    LATHE_ERROR("Attempted to divide by 0, returning 0 vec3 instead", nullptr);
+    return (lathe_vec3){{0.0f, 0.0f, 0.0f}};
+  }
   float recipcal = 1.0f / scalar;
   return (lathe_vec3){{v->x * recipcal, v->y * recipcal, v->z * recipcal}};
 }
@@ -16,6 +23,11 @@ lathe_vec3 vec3_negate(const lathe_vec3 *v) {
 
 lathe_vec3 vec3_normalize(const lathe_vec3 *v) {
   float magnitude = vec3_magnitude(v);
+  assert(magnitude != 0.0f);
+  if (magnitude == 0.0f) {
+    LATHE_ERROR("Attempted to divide by 0, returning 0 vec3 instead", nullptr);
+    return (lathe_vec3){{0.0f, 0.0f, 0.0f}};
+  }
   float recipcal = 1.0f / magnitude;
   return (lathe_vec3){{v->x * recipcal, v->y * recipcal, v->z * recipcal}};
 }
@@ -36,9 +48,14 @@ float vec3_dot_product(const lathe_vec3 *a, const lathe_vec3 *b) {
   return (a->x * b->x + a->y * b->y + a->z * b->z);
 }
 
-lathe_vec3 vec3_cross_product([[maybe_unused]] const lathe_vec3 *a,[[maybe_unused]] const lathe_vec3 *b) {
+lathe_vec3 vec3_cross_product([[maybe_unused]] const lathe_vec3 *a,
+                              [[maybe_unused]] const lathe_vec3 *b) {
   lathe_vec3 v = {};
   return v;
+}
+
+bool vec3_eq(const lathe_vec3 *a, const lathe_vec3 *b){
+    return (a->x == b->x && a->y == b->y && a->z == b->z);
 }
 
 void vec3_print(const lathe_vec3 *v, FILE *out) {
