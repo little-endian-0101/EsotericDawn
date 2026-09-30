@@ -1,6 +1,7 @@
 
 #include "system/lathe_controller.h"
 #import <GameController/GameController.h>
+#include "system/lathe_logger.h"
 
 bool controller_connected(void) {
   [[NSRunLoop currentRunLoop]
@@ -11,15 +12,23 @@ bool controller_connected(void) {
 lathe_controller_state controller_get_state(void) {
   lathe_controller_state state = {0};
 
-  GCController *controller = GCController.controllers.firstObject;
+  GCController *controller = GCController.current;
 
-  if (controller == nil)
+  if (controller == nil){
+    //How do you even get here
+    LATHE_ERROR("Controller was not found?",stderr);
     return state;
+  }
+  
 
   GCExtendedGamepad *pad = controller.extendedGamepad;
 
-  if (pad == nil)
+  if (pad == nil){
+    //Currently not supporting these odd controllers, should support most modern ones
+    LATHE_ERROR("The Controller does not support the extended gamepad profile!",stderr);
     return state;
+  }
+    
 
   state.left_x = pad.leftThumbstick.xAxis.value;
   state.left_y = pad.leftThumbstick.yAxis.value;
@@ -30,10 +39,10 @@ lathe_controller_state controller_get_state(void) {
   state.left_trigger = pad.leftTrigger.value;
   state.right_trigger = pad.rightTrigger.value;
 
-  state.a = pad.buttonA.isPressed;
-  state.b = pad.buttonB.isPressed;
-  state.x = pad.buttonX.isPressed;
-  state.y = pad.buttonY.isPressed;
+  state.a_button = pad.buttonA.isPressed;
+  state.b_button = pad.buttonB.isPressed;
+  state.x_button = pad.buttonX.isPressed;
+  state.y_button = pad.buttonY.isPressed;
 
   state.dpad_up = pad.dpad.up.isPressed;
   state.dpad_down = pad.dpad.down.isPressed;
@@ -44,48 +53,55 @@ lathe_controller_state controller_get_state(void) {
 }
 
 #ifdef LATHE_DEBUG_ENABLED
-void controller_print_buttons(void) {
-  [[NSRunLoop currentRunLoop]
-      runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+bool controller_print_buttons(void) {
+  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
 
-  GCController *controller = GCController.controllers.firstObject;
+  GCController *controller = GCController.current;
 
   if (controller == nil)
-    return;
+    return false;
 
   GCExtendedGamepad *pad = controller.extendedGamepad;
 
   if (pad == nil)
-    return;
+    return false;
 
   if (pad.buttonA.isPressed)
-    printf("A\n");
+    LATHE_DEBUG("A pressed",stderr);
   if (pad.buttonB.isPressed)
-    printf("B\n");
+    LATHE_DEBUG("B pressed",stderr);
   if (pad.buttonX.isPressed)
-    printf("X\n");
+    LATHE_DEBUG("X pressed",stderr);
   if (pad.buttonY.isPressed)
-    printf("Y\n");
+    LATHE_DEBUG("Y pressed",stderr);
 
   if (pad.leftShoulder.isPressed)
-    printf("L1\n");
+    LATHE_DEBUG("L1 pressed",stderr);
   if (pad.rightShoulder.isPressed)
-    printf("R1\n");
+    LATHE_DEBUG("R1 pressed",stderr);
 
   if (pad.leftTrigger.isPressed)
-    printf("L2\n");
+    LATHE_DEBUG("L2 pressed",stderr);
   if (pad.rightTrigger.isPressed)
-    printf("R2\n");
+    LATHE_DEBUG("R2 pressed",stderr);
 
   if (pad.dpad.up.isPressed)
-    printf("D-Pad Up\n");
+    LATHE_DEBUG("D-Pad Up pressed",stderr);
   if (pad.dpad.down.isPressed)
-    printf("D-Pad Down\n");
+    LATHE_DEBUG("D-Pad Down pressed",stderr);
   if (pad.dpad.left.isPressed)
-    printf("D-Pad Left\n");
+    LATHE_DEBUG("D-Pad Left pressed",stderr);
   if (pad.dpad.right.isPressed)
-    printf("D-Pad Right\n");
+    LATHE_DEBUG("D-Pad Right pressed",stderr);
+    
+  if(pad.buttonMenu.isPressed){
+      LATHE_DEBUG("Pause pressed",stderr);
+      return false;//Done with test
+  }
+  return true;
 }
 #else
-void controller_print_buttons(void) {}
+bool controller_print_buttons(void) {return false;}
 #endif
+
+
