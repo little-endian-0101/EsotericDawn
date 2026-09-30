@@ -13,24 +13,29 @@
 #include "system/lathe_logger.h"
 #include <assert.h>
 #include <stdlib.h>
-//#include <time.h>
+#include <time.h>
 #include <unistd.h> 
-
+#include "platform/platform.h"
+uint64_t time_freq;
 int main(void) {
-    lathe_vec3 v = {{5, 25, 5}};
-    //
-    FILE *fptr;
-    fptr = fopen("LogFile", "a");
+    LATHE_INFO("Starting Vec3 Test...",nullptr);
     
-    vec3_print(&v, stderr);
+    lathe_vec3 v = {{5, 25, 5}};
+    lathe_vec3 v_negated = {{-5,-25,-5}};
     v = vec3_negate(&v);
-    vec3_print(&v, NULL);
+    assert(vec3_eq(&v,&v_negated));
     
     lathe_vec3 n = vec3_normalize(&v);
     vec3_print(&n, nullptr);
     lathe_vec3 d = vec3_add(&v, &v);
-    vec3_print(&d, fptr);
-    lathe_mat_3x3 m = create_3x3_matrix_vec3(&d, &d, &d);
+    vec3_print(&d, nullptr);
+    LATHE_INFO("Ending Vec3 Test",nullptr);
+    
+    LATHE_INFO("Starting Mat3 Test...",nullptr);
+    FILE *fptr;
+    fptr = fopen("LogFile", "a");
+    
+       lathe_mat_3x3 m = create_3x3_matrix_vec3(&d, &d, &d);
     lathe_mat_3x3 m2 = create_3x3_matrix_vec3(&d, &d, &d);
     
     mat_3x3_print(&m, NULL);
@@ -57,6 +62,8 @@ int main(void) {
     assert(result.z == 50.0f);
     vec3_print(&result, NULL);
     
+    LATHE_INFO("Ending Mat3 Test",nullptr);
+    
     #ifdef LATHE_HEAP_BACKING_MEMORY_TEST
         void *backing_buf = malloc(LATHE_1KB);
     #else
@@ -78,13 +85,6 @@ int main(void) {
     
     printf("%p %c\n", (void *)z, *z);
     
-    LATHE_FATAL("This is FATAL!", nullptr);
-    LATHE_WARN("This is a warning!", nullptr);
-    LATHE_ERROR("This is an ERROR", stdout);
-    LATHE_INFO("This is just for information", NULL);
-    LATHE_TRACE("This is a trace msg", NULL);
-    LATHE_DEBUG("debugger msg", nullptr);
-    
     lathe_vec3 v1 = {{2, 7, 1}};
     lathe_vec3 v2 = {{8, 2, 8}};
     assert(vec3_dot_product(&v1, &v2) == 38.0f);
@@ -92,18 +92,78 @@ int main(void) {
     // free(backing_buf); //not really needed 
     fclose(fptr);
     
-    // Controller Test
-    for (;;) {
-        printf("\rSearching for controller   \rSearching for controller");
-        for (int dots = 0; dots <= 3; dots++) {
-            fflush(stdout);
-            usleep(300000);
-            printf(".");
-        }
-        if (controller_connected()) {
-            printf("\nController found!\n");
-            LATHE_INFO("Engine Test Complete",nullptr);
-            break;
-        }
+    LATHE_INFO("Starting Lathe Logger Test",nullptr);
+    
+    LATHE_FATAL("This is FATAL!", nullptr);
+    LATHE_WARN("This is a warning!", nullptr);
+    LATHE_ERROR("This is an ERROR", stdout);
+    LATHE_INFO("This is just for information", NULL);
+    LATHE_TRACE("This is a trace msg", NULL);
+    LATHE_DEBUG("debugger msg", nullptr);
+    
+    LATHE_INFO("Ending Lathe Logger Test",nullptr);
+    
+
+    LATHE_INFO("Starting Lathe Simple Run Test",nullptr);
+    PlatformState platform = {};
+    timer_init();
+    
+    
+    if (!platform_start(
+            &platform,
+            nullptr,
+            100,
+            100,
+            0,
+            0)) {
+        LATHE_FATAL("Platform was not able to start!", nullptr);
+        return 1;
     }
-}
+    
+    bool running = true;
+    [[maybe_unused]] lathe_controller_state controller_s = {0};
+    double previous_frame = lathe_get_time();
+    double fps_timer = previous_frame;
+    uint64_t fps_frames = 0;
+    const double target_fps = 75.0;
+    const double target_frame_time = 1.0 / target_fps;
+
+    while (running) {
+    
+    double frame_start = lathe_get_time();
+    
+    running = platform_handle_os_events(&platform);
+    
+    //update
+    
+    //render a new frame
+    
+    fps_frames++;
+    
+    double now = lathe_get_time();
+    double fps_elapsed = now - fps_timer;
+    
+    // Print FPS 30 times per second
+    if (fps_elapsed >= 1.0 / 30.0) {
+        double fps = (double)fps_frames / fps_elapsed;
+    
+        printf("FPS: %.2f\r FPS:\r", fps);
+    
+        fps_frames = 0;
+        fps_timer = now;
+    }
+    
+    //limit framerate
+    double frame_time = lathe_get_time() - frame_start;
+    
+    if (frame_time < target_frame_time) {
+        double remaining = target_frame_time - frame_time;
+        usleep((useconds_t)((uint64_t)(remaining * 1000000.0)));
+    }
+    
+    previous_frame = frame_start;
+    }  
+    
+    platform_shutdown(&platform);
+    LATHE_INFO("Ending Lathe Simple Run Test",nullptr);
+    }
