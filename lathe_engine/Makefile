@@ -8,14 +8,17 @@ CFLAGS := -Icore/include \
 		  -Wpedantic \
 		  -Wconversion \
 		  -Werror \
-		  -DLATHE_HEAP_BACKING_MEMORY_TEST
+		  -DLATHE_DEBUG_ENABLED
 
 SRC :=	test.c \
 		core/source/math/lathe_mat3.c \
 		core/source/math/lathe_vec3.c \
 		core/source/memory/lathe_memory.c \
 		core/source/system/lathe_logger.c \
-		core/source/system/lathe_controller.m
+		core/source/system/lathe_controller.m \
+		core/source/platform/mac_platform.m 
+
+#-DNDEBUG
 
 #https://stackoverflow.com/a/12099167
 # UNAME_S :=
