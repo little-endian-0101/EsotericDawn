@@ -28,6 +28,9 @@ typedef union lathe_vec3 {
     };
 } lathe_vec3;
 
+/**@brief A vec3 with 0 for each component*/
+extern const lathe_vec3 zero_vec3;
+
 /**
  * @defgroup vec3_operators
  * @brief A collection operators to use on vec3 objects
@@ -122,6 +125,15 @@ lathe_vec3 vec3_cross_product(const lathe_vec3 *a, const lathe_vec3 *b);
  * @return true if @p a and @p b have the same components (x,y,z) and false otherwise
  */
 bool vec3_eq(const lathe_vec3 *a, const lathe_vec3 *b);
+
+/**
+ * @ingroup vec3_operators
+ * @brief Gives the angle between two vectors
+ * @param a Pointer to a vec3
+ * @param b Pointer to another vec3 (or the same) dont care about using restrict 
+ * @return The angle between both vectors in radians
+ */
+float vec3_angle(const lathe_vec3 *a,const lathe_vec3 *b);
 
 /**
  * @ingroup vec3_operators

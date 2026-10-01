@@ -31,6 +31,13 @@ int main(void) {
     vec3_print(&n, nullptr);
     lathe_vec3 d = vec3_add(&v, &v);
     vec3_print(&d, nullptr);
+    
+    //angle between <1,2,3> and <4,-1,2> should be 0.46666
+    lathe_vec3 a1 = {{1,2,3}};
+    lathe_vec3 a2 = {{4,-1,2}};
+    printf("%f was the angle in radians\n" ,vec3_angle(&a1,&a2));
+    
+    
     LATHE_INFO("Ending Vec3 Test",nullptr);
     
     LATHE_INFO("Starting Mat3 Test...",nullptr);

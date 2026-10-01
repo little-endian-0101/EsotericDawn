@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <math.h>
 
+const lathe_vec3 zero_vec3 = {};
+
 lathe_vec3 vec3_scalar_mult(const lathe_vec3 *v, float scalar) {
   return (lathe_vec3){{v->x * scalar, v->y * scalar, v->z * scalar}};
 }
@@ -56,6 +58,18 @@ lathe_vec3 vec3_cross_product([[maybe_unused]] const lathe_vec3 *a,
 
 bool vec3_eq(const lathe_vec3 *a, const lathe_vec3 *b){
     return (a->x == b->x && a->y == b->y && a->z == b->z);
+}
+
+float vec3_angle(const lathe_vec3 *a,const lathe_vec3 *b)
+{
+	float a_dot_b = vec3_dot_product(a,b);
+	
+    float a_len = vec3_magnitude(a);
+    float b_len = vec3_magnitude(b);
+    
+	float cos_theta = (a_dot_b)/(a_len * b_len);
+   // printf("%f %f %f %f and %f is angle btw \n",a_dot_b,a_len,b_len,cos_theta,acosf(cos_theta));
+	return acosf(cos_theta); //Radians
 }
 
 void vec3_print(const lathe_vec3 *v, FILE *out) {
