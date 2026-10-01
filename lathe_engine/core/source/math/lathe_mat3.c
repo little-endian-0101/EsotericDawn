@@ -9,6 +9,8 @@
 //
 
 #include "math/lathe_mat3.h"
+#include "system/lathe_logger.h"
+#include <assert.h>
 
 const lathe_mat_3x3 zero_3x3 = {};
 const lathe_mat_3x3 identity_3x3 = {
@@ -52,6 +54,11 @@ lathe_mat_3x3 create_3x3_matrix_float(float n00, float n01, float n02,
 }
 
 lathe_vec3 get_mat_3x3_row(const lathe_mat_3x3 *mat, int row) {
+    assert(row < 3);
+    if(row >= 3){
+        LATHE_ERROR("Attempted to access index outside of matrix row range, returning 0 vector", nullptr);
+        return (lathe_vec3){{0.0f, 0.0f, 0.0f}};
+    }
   return (lathe_vec3){{mat->m[row][0], mat->m[row][1], mat->m[row][2]}};
 }
 
