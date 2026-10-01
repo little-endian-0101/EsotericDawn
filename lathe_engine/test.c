@@ -55,7 +55,7 @@ int main(void) {
     
     i.m[2][0] = 1.6f;
     
-    lathe_vec3 tw = get_mat_3x3_row(&i, 2);
+    lathe_vec3 tw = get_mat_3x3_row(&i, 1);
     
     vec3_print(&tw, NULL);
     float mag = vec3_magnitude(&n);
