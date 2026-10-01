@@ -47,7 +47,11 @@ float vec3_magnitude(const lathe_vec3 *v) {
 }
 
 float vec3_dot_product(const lathe_vec3 *a, const lathe_vec3 *b) {
-  return (a->x * b->x + a->y * b->y + a->z * b->z);
+    float scalar = (a->x * b->x + a->y * b->y + a->z * b->z);
+    if(scalar == 0.0f){
+        LATHE_INFO("These vectors are orthogonal to one another!",stderr);
+    }
+  return scalar;
 }
 
 lathe_vec3 vec3_cross_product([[maybe_unused]] const lathe_vec3 *a,
