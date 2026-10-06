@@ -3,8 +3,8 @@
 #include "system/lathe_logger.h"
 
 static const char* default_application_name = "LATHE";
-static constexpr int32_t default_win_width = 1280;
-static constexpr int32_t default_win_height = 720;
+static constexpr int32_t default_win_width = 480;
+static constexpr int32_t default_win_height = 480;
 
 
 typedef struct PlatformState {

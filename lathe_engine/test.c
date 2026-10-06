@@ -122,8 +122,8 @@ int main(void) {
     if (!platform_start(
             &platform,
             nullptr,
-            100,
-            100,
+            0,
+            0,
             0,
             0)) {
         LATHE_FATAL("Platform was not able to start!", nullptr);
