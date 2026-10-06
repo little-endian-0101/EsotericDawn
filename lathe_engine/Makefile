@@ -16,7 +16,7 @@ SRC :=	test.c \
 		core/source/memory/lathe_memory.c \
 		core/source/system/lathe_logger.c \
 		core/source/system/lathe_controller.m \
-		core/source/platform/mac_platform.m 
+		core/source/platform/platform_mac.m 
 
 #-DNDEBUG
 
