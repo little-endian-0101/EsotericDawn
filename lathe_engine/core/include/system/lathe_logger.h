@@ -92,7 +92,6 @@ void term_reset(FILE *out);
 /** @} */ // End of Terminal Coloring Utils
 
 
-
 void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf);
 
 /**
@@ -102,7 +101,7 @@ void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf);
  * @param msg Message to be logged
  */
 void internal_log_mes(lathe_log_level lvl, FILE *out, const char *file,
-                       int line, const char *time, const char *msg);
+                       int line, const char *time, const char *msg); //Todo add va args
 
 #define LATHE_FATAL(msg, out)                                                  \
   internal_log_mes(LOG_LEVEL_FATAL, out, __FILE__, __LINE__, __TIME__, msg);
