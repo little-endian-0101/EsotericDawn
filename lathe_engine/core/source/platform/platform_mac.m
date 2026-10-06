@@ -21,7 +21,8 @@ typedef struct MacPlatformState {
 } MacPlatformState;
 
 bool platform_start(PlatformState *state, const char *application_name, int32_t x, int32_t y, int32_t width, int32_t height) {
-    
+    //Do not belive ARC is needed here? But should verify this with debugger/ analyser later today 10/02
+    @autoreleasepool{ // I mean it works....
     if (state == nullptr) {
         LATHE_FATAL("The platform state was not provided!", stderr);     
         return false;
@@ -65,7 +66,7 @@ bool platform_start(PlatformState *state, const char *application_name, int32_t 
 
     if (title == nil) {
          LATHE_FATAL("MacOSX failed to convert Title ...huh..", stderr);
-        [mac->window close];
+        [mac->window close];//Now is this really needed? Cant see this releastically failing...
         platform_free(mac,false);
         return false;
     }
@@ -82,12 +83,13 @@ bool platform_start(PlatformState *state, const char *application_name, int32_t 
         return false;
     }
 
-    mac->start_time = mach_absolute_time();
-    start_time =  mac->start_time;
+    mac->start_time = mach_absolute_time(); // Esentially the engines start time
+    start_time = mac->start_time;
 
     state->internal_state = mac;
 
     return true;        
+    }
 }
 
 void platform_shutdown(PlatformState *state)
@@ -113,25 +115,20 @@ bool platform_handle_os_events(PlatformState *state)
 
     MacPlatformState *mac =
         (MacPlatformState *)state->internal_state;
-
-    for (;;) {
-
-        NSEvent *event =
+    NSEvent * event;
+    do{
+        event =
             [mac->application
                 nextEventMatchingMask:NSEventMaskAny
-                            untilDate:nil
-                               inMode:NSDefaultRunLoopMode
-                              dequeue:YES];
-                              
-                                 [mac->application sendEvent:event];
-        [mac->application updateWindows];
+                    untilDate:nil
+                        inMode:NSDefaultRunLoopMode
+                            dequeue:YES];
+    
+    [mac->application sendEvent:event]; //Should handle default window close event, probably best to handle here
+    [mac->application updateWindows];
+    
+    }while(event != nil);
 
-        if (event == nil) {
-            break;
-        }
-
-     
-    }
 
     // Window was closed.
     if (![mac->window isVisible]) {
@@ -143,7 +140,8 @@ bool platform_handle_os_events(PlatformState *state)
 
 void *platform_alloc(uint64_t size, bool aligned)
 {
-    if (size == 0) {
+    if (size <= 0) {
+        LATHE_ERROR("Size asked for is invalid",stderr);
         return nullptr;
     }
 
@@ -151,13 +149,12 @@ void *platform_alloc(uint64_t size, bool aligned)
         return malloc((size_t)size);
     }
 
-    // 16-byte alignment is a reasonable general-purpose baseline.
-    constexpr size_t alignment = 16;
+    constexpr size_t alignment = 16; // NOTE: sizeof(void *)  MIN and power of 2
 
     void *block = NULL;
 
     if (posix_memalign(&block, alignment, (size_t)size) != 0) {
-        return NULL;
+        return nullptr;
     }
 
     return block;
