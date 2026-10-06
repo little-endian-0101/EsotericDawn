@@ -37,7 +37,8 @@ int main(void) {
     lathe_vec3 a2 = {{4,-1,2}};
     printf("%f was the angle in radians\n" ,vec3_angle(&a1,&a2));
     
-    
+    //TODO: Test this function  later
+    //lathe_vec3 vec3_projection(const lathe_vec3 *a, const lathe_vec3 *b);
     LATHE_INFO("Ending Vec3 Test",nullptr);
     
     LATHE_INFO("Starting Mat3 Test...",nullptr);

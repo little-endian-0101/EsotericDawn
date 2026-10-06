@@ -105,6 +105,7 @@ float vec3_magnitude(const lathe_vec3 *v);
  * @param a Pointer to a vec3
  * @param b Pointer to another vec3 (or the same) dont care about using restrict 
  * @return The resulting dot product of the two vectors @p a and @p b.
+ * @detail when both vec3's are orthogonal they return  0 scalar
  */
 float vec3_dot_product(const lathe_vec3 *a, const lathe_vec3 *b);
 
@@ -114,8 +115,12 @@ float vec3_dot_product(const lathe_vec3 *a, const lathe_vec3 *b);
  * @param a Pointer to a vec3
  * @param b Pointer to another vec3 (or the same) dont care about using restrict 
  * @return The resulting vec3.
+ * @detail When both vec3's are parallel to one another the zero vec is returned, maybe loop into wedge productv
  */
 lathe_vec3 vec3_cross_product(const lathe_vec3 *a, const lathe_vec3 *b);
+
+lathe_vec3 vec3_projection(const lathe_vec3 *a, const lathe_vec3 *b);
+lathe_vec3 vec3_rejection(const lathe_vec3 *a, const lathe_vec3 *b);
 
 /**
  * @ingroup vec3_operators
