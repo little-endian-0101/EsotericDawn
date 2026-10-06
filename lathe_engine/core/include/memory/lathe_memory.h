@@ -25,14 +25,29 @@ constexpr size_t LATHE_1MB = 1024 * LATHE_1KB;
 constexpr size_t LATHE_1GB = 1024 * LATHE_1MB;
 constexpr size_t LATHE_ALIGNMENT = (2 * sizeof(void *));
 
-// As of now, does not own memory...
+/**
+ * @brief a memory arena
+ */
 typedef struct {
-  unsigned char *buf;
-  size_t buf_len;
-  size_t prev_offset;
-  size_t curr_offset;
+  unsigned char *buf; /**< The memory buffer that is passed into the struct, can be malloc or stack. */
+  size_t buf_len; /**< Length of the suplied buffer. */
+  size_t prev_offset; /**< Last offset of the memory inserted into the arena. */
+  size_t curr_offset;/**< Current offsert of the memory inserted into the arena. */
 } lathe_arena;
 
+/**
+ * @defgroup memory_arena
+ * @brief A collection of functions on a memory arena
+ * @details 
+ */
+ 
+/**
+ * @ingroup vec3_operators
+ * @brief Multiplies the vec3 by a scalar
+ * @param v Pointer to the vec3 to multiply
+ * @param scalar Scalar value to multiply each component of vec3 @p v by.
+ * @return The resulting vec3.
+ */
 void arena_init(lathe_arena *arena, void *backing_buf, size_t backing_capacity);
 // Must ensure that the data is aligned
 uintptr_t align_foward(uintptr_t ptr, size_t align);
