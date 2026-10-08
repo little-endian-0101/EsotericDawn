@@ -16,6 +16,8 @@
 #include <time.h>
 #include <unistd.h> 
 #include "platform/platform.h"
+#include "render/renderer.h"
+#include <math.h>
 
 
 uint64_t time_freq;
@@ -130,6 +132,14 @@ int main(void) {
         return 1;
     }
     
+    //fix....
+  if(renderer_start(&platform)){
+      LATHE_INFO("Renderer was started", NULL);
+  }else{
+      LATHE_FATAL("RENDERER was not able to start!", nullptr);
+      return 1;
+  }
+    
     bool running = true;
     [[maybe_unused]] lathe_controller_state controller_s = {0};
     double previous_frame = lathe_get_time();
@@ -137,7 +147,7 @@ int main(void) {
     uint64_t fps_frames = 0;
     const double target_fps = 75.0;
     const double target_frame_time = 1.0 / target_fps;
-
+    float t = 0.0f;
     while (running) {
     
     double frame_start = lathe_get_time();
@@ -147,7 +157,21 @@ int main(void) {
     //update
     
     //render a new frame
-    
+
+    float red   = (sinf(t)        + 1.0f) / 2.0f;
+    float green = (sinf(t + 2.0f) + 1.0f) / 2.0f;
+    float blue  = (sinf(t + 4.0f) + 1.0f) / 2.0f;
+
+    renderer_begin_frame();
+
+    renderer_clear(
+        red,
+        green,
+        blue,
+        1.0f
+    );
+    renderer_end_frame();
+      t += 0.01f;
     fps_frames++;
     
     double now = lathe_get_time();
@@ -173,7 +197,7 @@ int main(void) {
     
     previous_frame = frame_start;
     }  
-    
+    renderer_shutdown();
     platform_shutdown(&platform);
     LATHE_INFO("Ending Lathe Simple Run Test",nullptr);
     }
