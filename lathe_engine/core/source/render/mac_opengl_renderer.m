@@ -15,7 +15,7 @@ typedef struct MacPlatformState {
     uint64_t start_time;
 } MacPlatformState;
 
-//TODO move into renderer internal state
+//TODO: move into renderer internal state
 static NSOpenGLView *gl_view = nil;
 static NSOpenGLContext *gl_context = nil;
 
@@ -97,6 +97,7 @@ void renderer_end_frame(){
     [gl_context flushBuffer];
 }
 
+//tbf...when the renderer shutsdown....ah nvm
 void renderer_shutdown(){
     [NSOpenGLContext clearCurrentContext];
     gl_context = nil;

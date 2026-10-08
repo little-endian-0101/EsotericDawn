@@ -54,7 +54,7 @@ lathe_controller_state controller_get_state(void) {
 
 #ifdef LATHE_DEBUG_ENABLED
 bool controller_print_buttons(void) {
-  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+  [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];//Gotta fix this...
 
   GCController *controller = GCController.current;
 
