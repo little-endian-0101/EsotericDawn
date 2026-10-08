@@ -102,6 +102,16 @@ void log_lvl_to_str(lathe_log_level lvl, char *log_lvl_buf);
  */
 void internal_log_mes(lathe_log_level lvl, FILE *out, const char *file,
                        int line, const char *time, const char *msg); //Todo add va args
+                       
+/**
+ * @brief Sets the log message to the provided output not to be used directly
+ * @param lvl Provided color for this terminal function
+ * @param out The output file/buffer
+ * @param fmt The format string to be used
+ * @param ... vargs
+ */
+void internal_log_fmt_mes(FILE *out,lathe_log_level lvl, const char *file,
+                        int line, const char *time, const char *fmt, ...);
 
 #define LATHE_FATAL(msg, out)                                                  \
   internal_log_mes(LOG_LEVEL_FATAL, out, __FILE__, __LINE__, __TIME__, msg);
