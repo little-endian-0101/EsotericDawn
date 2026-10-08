@@ -78,8 +78,7 @@ bool renderer_start(PlatformState *state){
     const GLubyte *version = glGetString(GL_VERSION);
 
     if (version != NULL) {
-        printf("OpenGL Version: %s\n", (const char *)version);
-        LATHE_INFO("OpenGL Version fix the logger....", nullptr);
+        LATHE_INFO_F(nullptr,"OpenGL Version: %s\n", (const char *)version);
     }
 
     return true;
