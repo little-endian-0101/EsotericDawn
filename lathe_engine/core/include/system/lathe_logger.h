@@ -135,3 +135,6 @@ void internal_log_fmt_mes(FILE *out,lathe_log_level lvl, const char *file,
 
 #define LATHE_INFO_F(out, fmt, ...)                                                         \
   internal_log_fmt_mes(out, LOG_LEVEL_INFO, __FILE__, __LINE__, __TIME__, fmt __VA_OPT__(,) __VA_ARGS__);
+  
+#define LATHE_DEBUG_F(out, fmt, ...)                                                         \
+  internal_log_fmt_mes(out, LOG_LEVEL_DEBUG, __FILE__, __LINE__, __TIME__, fmt __VA_OPT__(,) __VA_ARGS__);
