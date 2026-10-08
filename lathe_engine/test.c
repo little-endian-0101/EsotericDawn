@@ -181,7 +181,7 @@ int main(void) {
     if (fps_elapsed >= 1.0 / 30.0) {
         double fps = (double)fps_frames / fps_elapsed;
     
-        printf("FPS: %.2f\r FPS:\r", fps);
+        LATHE_INFO_F(nullptr,"FPS: %.2f\r FPS:\r", fps);
     
         fps_frames = 0;
         fps_timer = now;
