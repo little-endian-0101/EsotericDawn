@@ -130,3 +130,8 @@ void internal_log_fmt_mes(FILE *out,lathe_log_level lvl, const char *file,
 
 #define LATHE_TRACE(msg, out)                                                  \
   internal_log_mes(LOG_LEVEL_TRACE, out, __FILE__, __LINE__, __TIME__, msg);
+
+//Format variants too lazy to fix the above... but should use these variants bellow instead, a nice todo for later 
+
+#define LATHE_INFO_F(out, fmt, ...)                                                         \
+  internal_log_fmt_mes(out, LOG_LEVEL_INFO, __FILE__, __LINE__, __TIME__, fmt __VA_OPT__(,) __VA_ARGS__);
