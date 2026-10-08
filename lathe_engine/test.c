@@ -155,9 +155,13 @@ int main(void) {
     running = platform_handle_os_events(&platform);
     
     //update
+    // if(controller_print_buttons()){  //tanks the frame rate! need to use this loop not another...
+    //     LATHE_INFO_F(nullptr,"Controller is connected\n");
+    // }
+    controller_print_buttons();
     
     //render a new frame
-
+   
     float red   = (sinf(t)        + 1.0f) / 2.0f;
     float green = (sinf(t + 2.0f) + 1.0f) / 2.0f;
     float blue  = (sinf(t + 4.0f) + 1.0f) / 2.0f;
