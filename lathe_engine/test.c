@@ -1,6 +1,6 @@
 //
 //  test_main.c
-// just test the basics of the engine really.
+//  just test the basics of the engine really.
 //  lathe_tools
 //
 //  Created by Christopher Scott on 9/20/26.
@@ -19,8 +19,8 @@
 #include "render/renderer.h"
 #include <math.h>
 
-
 uint64_t time_freq;
+
 int main(void) {
     LATHE_INFO("Starting Vec3 Test...",nullptr);
     
