@@ -87,7 +87,7 @@ bool platform_start(PlatformState *state, const char *application_name, int32_t 
     start_time = mac->start_time;
 
     state->internal_state = mac;
-
+    
     return true;        
     }
 }
