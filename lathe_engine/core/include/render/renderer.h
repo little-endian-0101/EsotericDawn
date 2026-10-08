@@ -3,6 +3,7 @@
 #pragma once 
 
 #include <stdint.h>
+#include "platform/platform.h"
 
 typedef enum {
     RENDERER_OPENGL,
@@ -15,22 +16,17 @@ typedef struct {
     void *internal_state;
 } renderer;
 
-bool renderer_start(
-    renderer *r,
-    renderer_api api,
-    void *platform_window
-);
+bool renderer_start(PlatformState *state);
 
-void renderer_begin_frame(renderer *r);
+void renderer_begin_frame();
 
 void renderer_clear(
-    renderer *r,
     float red,
     float green,
     float blue,
     float alpha
 );
 
-void renderer_end_frame(renderer *r);
+void renderer_end_frame();
 
-void renderer_shutdown(renderer *r);
+void renderer_shutdown();
