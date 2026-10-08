@@ -20,6 +20,9 @@ typedef struct MacPlatformState {
     uint64_t start_time;
 } MacPlatformState;
 
+//todo dont make this silly thing global...
+const static char* key_code[0x7E] = {[0x00] = "A", [0x01] = "S", [0x0D] = "W", [0x02] = "D", [0x35] = "ESC",[0x31] = "Space"};
+
 bool platform_start(PlatformState *state, const char *application_name, int32_t x, int32_t y, int32_t width, int32_t height) {
     //Do not belive ARC is needed here? But should verify this with debugger/ analyser later today 10/02
     @autoreleasepool{ // I mean it works....
@@ -117,14 +120,36 @@ bool platform_handle_os_events(PlatformState *state)
         (MacPlatformState *)state->internal_state;
     NSEvent * event;
     do{
-        event =
-            [mac->application
-                nextEventMatchingMask:NSEventMaskAny
-                    untilDate:nil
-                        inMode:NSDefaultRunLoopMode
-                            dequeue:YES];
+        event = [mac->application
+                    nextEventMatchingMask:NSEventMaskAny
+                        untilDate:nil
+                            inMode:NSDefaultRunLoopMode
+                                dequeue:YES];
+                                
+        switch(event.type){
+            case NSEventTypeLeftMouseDown:
+                LATHE_DEBUG("left mouse down",nullptr);
+                break;
+            case NSEventTypeRightMouseDown:
+                LATHE_DEBUG("right mouse down",nullptr);
+                break;
+            case NSEventTypeKeyDown:
+                unsigned short keyCode = event.keyCode;
+                //Todo: Translate virtual keycode to key!
+                //rn wasd space and esc are all I care about
+                const char* key = key_code[keyCode];
+                LATHE_DEBUG_F(nullptr, "%s key was pressed down\n",key);
+                if(strncmp(key,"ESC",3) == 0){
+                    LATHE_DEBUG_F(nullptr,"ESC comparision passed, closing window\n");
+                    mac->window.isVisible = false;
+                }
+                break;
+            //Should handle default window close event, probably best to handle here instead...
+            default:
+            
+        }
     
-    [mac->application sendEvent:event]; //Should handle default window close event, probably best to handle here
+    [mac->application sendEvent:event]; 
     [mac->application updateWindows];
     
     }while(event != nil);
@@ -132,6 +157,7 @@ bool platform_handle_os_events(PlatformState *state)
 
     // Window was closed.
     if (![mac->window isVisible]) {
+        LATHE_DEBUG_F(nullptr,"The window was closed!\n");
         return false;
     }
 
